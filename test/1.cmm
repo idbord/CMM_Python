@@ -1,0 +1,22 @@
+/**
+标准输出
+0
+1
+2
+3
+*/
+int a = 3;
+if (True) {
+	int a = 2;
+	if (a == 2) {
+		int a[9];
+		a[8] = 1;
+		if (a[8] == 1) {
+			int a = 0;
+			write a;
+		}
+		write a[8];
+	}
+	write a;
+}
+write a;

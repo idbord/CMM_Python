@@ -5,6 +5,9 @@ from cmm.parser import Parser
 
 
 class Util:
+    def __init__(self):
+        pass
+
     @classmethod
     def get_token_list(cls, path):
         try:

@@ -8,6 +8,9 @@ from exception.parserException import ErrorParse
 
 
 class Parser:
+    def __init__(self):
+        pass
+
     iterator = None
     nodeList = []
     currentToken = None
@@ -90,13 +93,12 @@ class Parser:
         return False
 
     @classmethod
-    def read_token(cls, type):
+    def read_token(cls, t_type):
         try:
-            if cls.iterator.hasNext():
+            if cls.iterator.has_next():
                 cls.currentToken = cls.iterator.next()
-                if cls.currentToken.get_type() == type:
+                if cls.currentToken.get_type() == t_type:
                     return
             raise ErrorParse(cls.currentToken.get_line_num(), cls.currentToken.get_type())
         except ErrorParse as e:
             print e.content
-

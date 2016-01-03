@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-
 __author__ = 'idbord'
+
 from model.token import Token
 import string
 
 
 class Lexer:
+    def __init__(self):
+        pass
+
     bufferStream = None
     currentStr = ""
     lineNum = 1
@@ -125,51 +129,52 @@ class Lexer:
                         continue
 
                 elif 'a' <= Lexer.currentStr <= 'z' or 'A' <= Lexer.currentStr <= 'Z':
-                    stringTemp = Lexer.currentStr
+                    string_temp = Lexer.currentStr
                     Lexer.read_char()
-                    while ('a' <= Lexer.currentStr <= 'z') or ('A' <= Lexer.currentStr <= 'Z') or ('0' <= Lexer.currentStr <= '9') or (Lexer.currentStr == '_'):
-                        stringTemp += Lexer.currentStr
+                    while ('a' <= Lexer.currentStr <= 'z') or ('A' <= Lexer.currentStr <= 'Z') or \
+                            ('0' <= Lexer.currentStr <= '9') or (Lexer.currentStr == '_'):
+                        string_temp += Lexer.currentStr
                         Lexer.read_char()
                     token = Token(line_num=Lexer.lineNum)
-                    if stringTemp == 'int':
+                    if string_temp == 'int':
                         token.set_type(Token.INT)
-                    elif stringTemp == 'double':
+                    elif string_temp == 'double':
                         token.set_type(Token.DOUBLE)
-                    elif stringTemp == 'if':
+                    elif string_temp == 'if':
                         token.set_type(Token.IF)
-                    elif stringTemp == 'else':
+                    elif string_temp == 'else':
                         token.set_type(Token.ELSE)
-                    elif stringTemp == 'while':
+                    elif string_temp == 'while':
                         token.set_type(Token.WHILE)
-                    elif stringTemp == 'read':
+                    elif string_temp == 'read':
                         token.set_type(Token.READ)
-                    elif stringTemp == 'write':
+                    elif string_temp == 'write':
                         token.set_type(Token.WRITE)
-                    elif stringTemp == 'break':
+                    elif string_temp == 'break':
                         token.set_type(Token.BREAK)
-                    elif stringTemp in ['True', 'False']:
+                    elif string_temp in ['True', 'False']:
                         token.set_type(Token.BOOL)
-                        value = True if stringTemp == 'True' else False
+                        value = True if string_temp == 'True' else False
                         token.set_value(value)
                     else:
                         token.set_type(Token.ID)
-                        token.set_value(stringTemp)
+                        token.set_value(string_temp)
                     token_list.append(token)
                     continue
 
                 elif '0' <= Lexer.currentStr <= '9':
-                    isDouble = False
-                    intTemp = Lexer.currentStr
+                    is_double = False
+                    int_temp = Lexer.currentStr
                     Lexer.read_char()
                     while '0' <= Lexer.currentStr <= '9' or Lexer.currentStr == '.':
                         if Lexer.currentStr == '.':
-                            isDouble = True
-                        intTemp += Lexer.currentStr
+                            is_double = True
+                        int_temp += Lexer.currentStr
                         Lexer.read_char()
-                    if isDouble:
-                        token_list.append(Token(Token.LITERAL_DOU, Lexer.lineNum, string.atof(intTemp)))
+                    if is_double:
+                        token_list.append(Token(Token.LITERAL_DOU, Lexer.lineNum, string.atof(int_temp)))
                         continue
-                    token_list.append(Token(Token.LITERAL_INT, Lexer.lineNum, string.atoi(intTemp)))
+                    token_list.append(Token(Token.LITERAL_INT, Lexer.lineNum, string.atoi(int_temp)))
                     continue
 
             return token_list

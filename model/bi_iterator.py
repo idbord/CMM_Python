@@ -15,7 +15,7 @@ class BiIterator(object):
             raise StopIteration
         return result
 
-    def hasNext(self):
+    def has_next(self):
         try:
             if self.index < len(self.collection):
                 return True

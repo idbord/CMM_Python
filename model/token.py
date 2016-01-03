@@ -92,8 +92,8 @@ class Token:
     # 项
     TERM_EXP = 38
 
-    def __init__(self, type=None, line_num=None, value=None):
-        self._type = type
+    def __init__(self, t_type=None, line_num=None, value=None):
+        self._type = t_type
         self._lineNum = line_num
         self._value = value
 
@@ -106,8 +106,8 @@ class Token:
     def get_line_num(self):
         return self._lineNum
 
-    def set_type(self, type):
-        self._type = type
+    def set_type(self, t_type):
+        self._type = t_type
 
     def set_value(self, value):
         self._value = value
@@ -258,10 +258,3 @@ class Token:
                 return "//"
         except Exception as e:
             print e
-
-
-
-
-
-
-

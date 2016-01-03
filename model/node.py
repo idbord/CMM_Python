@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 __author__ = 'idbord'
 
+
 class Node:
+    def __init__(self):
+        pass
+
     IF_STMT = 1
     '''
     if语句，left存exp表达式，middle存条件为True的子节点，right存条件为False时的子节点
@@ -72,8 +76,8 @@ class Node:
     dataType存类型
     '''
 
-    def __init__(self, type, value, m_next, m_data_type, m_left, m_middle, m_right):
-        self._type = type
+    def __init__(self, n_type, value, m_next, m_data_type, m_left, m_middle, m_right):
+        self._type = n_type
         self._value = value
         self._mNext = m_next
         self._mDataType = m_data_type
@@ -102,8 +106,8 @@ class Node:
     def get_right(self):
         return self._mRight
 
-    def set_type(self, type):
-        self._type = type
+    def set_type(self, n_type):
+        self._type = n_type
 
     def set_value(self, value):
         self._value = value

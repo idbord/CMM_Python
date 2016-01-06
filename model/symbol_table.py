@@ -89,7 +89,9 @@ class SymbolTable:
         except ErrorInterpret as e:
             print e.content
 
-    # 不是很明白
+    '''
+    返回临时符号
+    '''
     @classmethod
     def get_temp_symbol(cls):
         try:
@@ -115,6 +117,13 @@ class SymbolTable:
             print(e.content)
 
     '''
+    清空临时符号列表
+    '''
+    @classmethod
+    def clear_temp_name(cls):
+        cls.tempNames = []
+
+    '''
     返回符号值
     '''
     @classmethod
@@ -124,7 +133,7 @@ class SymbolTable:
             return symbol.get_value()
         if len(symbol.get_value().get_value()) < index+1:
             raise ErrorInterpret("数组" + name + "越界")
-        if symbol.get_type() == [SymbolItem.ARRAY_INT, SymbolItem.ARRAY_DOU]:
+        if symbol.get_type() in [SymbolItem.ARRAY_INT, SymbolItem.ARRAY_DOU]:
             value = Value(SymbolItem.ARRAY_INT)
             value.set_value(symbol.get_value().get_value()[index])
             return value
@@ -136,10 +145,20 @@ class SymbolTable:
     def get_symbol_type(cls, name):
         return cls.get_symbol(name).get_type()()
 
+    '''
+    设置符号值
+    '''
     @classmethod
     def set_symbol_value(cls, name, value, index=-1):
         try:
-
+            symbol = cls.get_symbol(name)
+            if index == -1:
+                symbol.set_value(value)
+                return
+            if len(symbol.get_value().get_value()) < index + 1:
+                raise ErrorInterpret("数组" + name + "越界")
+            if symbol.get_type() in [SymbolItem.ARRAY_INT, SymbolItem.ARRAY_DOU]:
+                symbol.get_value().get_value()[index] = value
         except ErrorInterpret as e:
             print(e.content)
 

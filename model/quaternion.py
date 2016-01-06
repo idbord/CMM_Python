@@ -9,7 +9,7 @@ class Quaternion:
     IN = "in"
     OUT = "out"
     INT = "int"
-    REAL = "real"
+    DOUBLE = "double"
     ASSIGN = "assign"
     PLUS = "+"
     MINUS = "-"
@@ -22,7 +22,7 @@ class Quaternion:
     EQ = "=="
     NEQ = "!="
 
-    def __init__(self, first, second, third, forth):
+    def __init__(self, first=None, second=None, third=None, forth=None):
         self._first = first
         self._second = second
         self._third = third

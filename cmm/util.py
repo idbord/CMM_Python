@@ -25,3 +25,11 @@ class Util:
             return nodelist
         except Exception as e:
             print e
+
+    @classmethod
+    def get_node_list(cls, token_list):
+        try:
+            nodelist = Parser.parser_analysis(token_list)
+            return nodelist
+        except Exception as e:
+            print e

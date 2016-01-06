@@ -3,6 +3,8 @@ __author__ = 'idbord'
 
 
 class Token:
+
+    NULL = 0
     # int
     INT = 1
     # double
@@ -88,9 +90,11 @@ class Token:
     # 逻辑表达式
     LOGIC_EXP = 36
     # 多项式
-    ADDTIVE_EXP = 37
+    MULTI_TERM_EXP = 37
     # 项
     TERM_EXP = 38
+    # 因子
+    FACTOR = 39
 
     def __init__(self, t_type=None, line_num=None, value=None):
         self._type = t_type
@@ -170,9 +174,9 @@ class Token:
             if self._type == Token.RBRACE:
                 return "line .{0}".format(self._lineNum) + ": }"
 
-            if self._type == Token.SEMI:
-                return "line .{0}".format(self._lineNum) + ": ,"
             if self._type == Token.COMMA:
+                return "line .{0}".format(self._lineNum) + ": ,"
+            if self._type == Token.SEMI:
                 return "line .{0}".format(self._lineNum) + ": ;"
 
             if self._type in [Token.LITERAL_INT, Token.LITERAL_DOU, Token.BOOL, Token.ID]:

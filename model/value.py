@@ -11,20 +11,20 @@ from exception.semanticException import ErrorSemantic
 class Value:
     # 存储该值对象的类型，常量存储在符号表中
     # 值对象
-    def __init__(self, v_type=SymbolItem.NULL, v_value=None):
+    def __init__(self, v_type=SymbolItem.TEMP, v_value=None):
         self._v_type = v_type
         self._v_value = v_value
 
-    def get_v_type(self):
+    def get_type(self):
         return self._v_type
 
-    def get_v_value(self):
+    def get_value(self):
         return self._v_value
 
-    def set_v_type(self, v_type):
+    def set_type(self, v_type):
         self._v_type = v_type
 
-    def set_v_value(self, v_value):
+    def set_value(self, v_value):
         self._v_value = v_value
 
     def plus(self, value_obj):

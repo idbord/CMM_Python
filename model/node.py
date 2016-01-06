@@ -3,8 +3,7 @@ __author__ = 'idbord'
 
 
 class Node:
-    def __init__(self):
-        pass
+    NULL = 0
 
     IF_STMT = 1
     '''
@@ -76,7 +75,7 @@ class Node:
     dataType存类型
     '''
 
-    def __init__(self, n_type, value, m_next, m_data_type, m_left, m_middle, m_right):
+    def __init__(self, n_type=NULL, value=None, m_next=None, m_data_type=None, m_left=None, m_middle=None, m_right=None):
         self._type = n_type
         self._value = value
         self._mNext = m_next

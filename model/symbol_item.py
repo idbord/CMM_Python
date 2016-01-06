@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 __author__ = 'idbord'
-# 定义符号表元素类。
+# 定义符号类。
 
 
 class SymbolItem:
-    NULL = 0
+    TEMP = 0
 
     INT = 1
     DOUBLE = 2
@@ -13,7 +13,7 @@ class SymbolItem:
     BOOL = 5
 
     # 元素名，元素类型， 元素值， 元素层级， 指向元素下一个同名元素
-    def __init__(self, s_name, s_type, s_value, s_level, s_next):
+    def __init__(self, s_name=None, s_type=None, s_value=None, s_level=None, s_next=None):
         self.name = s_name
         self.type = s_type
         self.value = s_value

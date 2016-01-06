@@ -67,11 +67,11 @@ class Lexer:
                     continue
 
                 elif Lexer.currentStr == ',':
-                    token_list.append(Token(Token.SEMI, Lexer.lineNum))
+                    token_list.append(Token(Token.COMMA, Lexer.lineNum))
                     Lexer.read_char()
                     continue
                 elif Lexer.currentStr == ';':
-                    token_list.append(Token(Token.COMMA, Lexer.lineNum))
+                    token_list.append(Token(Token.SEMI, Lexer.lineNum))
                     Lexer.read_char()
                     continue
 

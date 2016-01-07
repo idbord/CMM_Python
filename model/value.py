@@ -30,36 +30,36 @@ class Value:
     def plus(self, value_obj):
         try:
             if self._v_type == SymbolItem.INT:
-                if value_obj.get_v_type() == SymbolItem.DOUBLE:
-                    v_o = Value(SymbolItem.DOUBLE, self._v_value + value_obj.get_v_value())
+                if value_obj.get_type() == SymbolItem.DOUBLE:
+                    v_o = Value(SymbolItem.DOUBLE, self._v_value + value_obj.get_value())
                     return v_o
-                elif value_obj.get_v_type() == SymbolItem.INT:
-                    v_o = Value(SymbolItem.INT, self._v_value + value_obj.get_v_value())
+                elif value_obj.get_type() == SymbolItem.INT:
+                    v_o = Value(SymbolItem.INT, self._v_value + value_obj.get_value())
                     return v_o
             elif self._v_type == SymbolItem.DOUBLE:
-                v_o = Value(SymbolItem.DOUBLE, self._v_value + value_obj.get_v_value())
+                v_o = Value(SymbolItem.DOUBLE, self._v_value + value_obj.get_value())
                 return v_o
         except ErrorSemantic("运算错误") as e:
             print e.content
 
     def minus(self, value_obj):
         try:
-            if self._v_type == SymbolItem.INT and value_obj.get_v_type() == SymbolItem.INT:
-                v_o = Value(SymbolItem.INT, self._v_value - value_obj.get_v_value())
+            if self._v_type == SymbolItem.INT and value_obj.get_type() == SymbolItem.INT:
+                v_o = Value(SymbolItem.INT, self._v_value - value_obj.get_value())
                 return v_o
-            v_o = Value(SymbolItem.DOUBLE, self._v_value - value_obj.get_v_value())
+            v_o = Value(SymbolItem.DOUBLE, self._v_value - value_obj.get_value())
             return v_o
         except ErrorSemantic("运算错误") as e:
             print e.content
 
     def multiple(self, value_obj):
         try:
-            if self._v_type == SymbolItem.INT and value_obj.get_v_type() == SymbolItem.INT:
-                v_o = Value(SymbolItem.INT, self._v_value * value_obj.get_v_value())
+            if self._v_type == SymbolItem.INT and value_obj.get_type() == SymbolItem.INT:
+                v_o = Value(SymbolItem.INT, self._v_value * value_obj.get_value())
                 return v_o
-            to_add_value = value_obj.get_v_value()
+            to_add_value = value_obj.get_value()
             mul_length = len(re.search('[0-9]+[.](\d+)', str(to_add_value)).group(1)) + len(re.search('[0-9]+[.](\d+)', str(self._v_value)).group(1))
-            result = self._v_value * value_obj.get_v_value()
+            result = self._v_value * value_obj.get_value()
             result_length = len(re.search('[0-9]+[.](\d+)', str(result)).group(1))
             result_value = round(result_length, mul_length) if result_length > mul_length else result
             v_o = Value(SymbolItem.DOUBLE, result_value)
@@ -69,26 +69,26 @@ class Value:
 
     def division(self, value_obj):
         try:
-            if value_obj.get_v_value() == 0:
+            if value_obj.get_value() == 0:
                 raise ErrorSemantic("语法错误，不能除以0")
-            elif self._v_type == SymbolItem.INT and value_obj.get_v_type() == SymbolItem.INT:
-                v_o = Value(SymbolItem.INT, self._v_value / value_obj.get_v_value())
+            elif self._v_type == SymbolItem.INT and value_obj.get_type() == SymbolItem.INT:
+                v_o = Value(SymbolItem.INT, self._v_value / value_obj.get_value())
                 return v_o
-            v_o = Value(SymbolItem.DOUBLE, self._v_value / value_obj.get_v_value())
+            v_o = Value(SymbolItem.DOUBLE, self._v_value / value_obj.get_value())
             return v_o
         except ErrorSemantic as e:
             print e.content
 
     def equal(self, value_obj):
         try:
-            v_o = Value(SymbolItem.BOOL, self._v_value == value_obj.get_v_value())
+            v_o = Value(SymbolItem.BOOL, self._v_value == value_obj.get_value())
             return v_o
         except ErrorSemantic("逻辑运算错误") as e:
             print e.content
 
     def greater(self, value_obj):
         try:
-            v_o = Value(SymbolItem.BOOL, self._v_value > value_obj.get_v_value())
+            v_o = Value(SymbolItem.BOOL, self._v_value > value_obj.get_value())
             return v_o
         except ErrorSemantic("逻辑运算错误") as e:
             print e.content
@@ -103,13 +103,13 @@ class Value:
     @classmethod
     def negative(cls, value_obj):
         try:
-            value_obj_type = value_obj.get_v_type()
+            value_obj_type = value_obj.get_type()
             if value_obj_type == SymbolItem.BOOL:
-                value = False if value_obj.get_v_value() else True
-                value_obj.set_v_value(value)
+                value = False if value_obj.get_value() else True
+                value_obj.set_value(value)
                 return value_obj
             elif value_obj_type in [SymbolItem.INT, SymbolItem.DOUBLE, SymbolItem.ARRAY_INT, SymbolItem.ARRAY_DOU]:
-                value_obj.set_v_value(value_obj.get_v_value() * -1)
+                value_obj.set_value(value_obj.get_value() * -1)
                 return value_obj
         except ErrorSemantic("负号使用错误") as e:
             print e.content

@@ -13,7 +13,7 @@ class Generator:
     def __init__(self):
         pass
 
-    symbol_table = SymbolTable.get_symbol_table()
+    symbol_table = SymbolTable()
     codes = []
     lineCount = -1
     scope_level = 0
@@ -24,22 +24,29 @@ class Generator:
         for i in node_list:
             cls.translate_switch(i)
         cls.symbol_table.delete_table()
+        return cls.codes
 
     @classmethod
     def translate_switch(cls, node):
-        node_type = node.get_type()
-        if node_type == Node.IF_STMT:
-            cls.translate_if(node)
-        elif node_type == Node.WHILE_STMT:
-            cls.translate_while(node)
-        elif node_type == Node.READ_STMT:
-            cls.translate_read(node)
-        elif node_type == Node.WRITE_STMT:
-            cls.translate_write(node)
-        elif node_type == Node.DECLARE_STMT:
-            cls.translate_declare(node)
-        elif node_type == Node.ASSIGN_STMT:
-            cls.translate_assign(node)
+        while True:
+            node_type = node.get_type()
+            if node_type == Node.IF_STMT:
+                cls.translate_if(node)
+            elif node_type == Node.WHILE_STMT:
+                cls.translate_while(node)
+            elif node_type == Node.READ_STMT:
+                cls.translate_read(node)
+            elif node_type == Node.WRITE_STMT:
+                cls.translate_write(node)
+            elif node_type == Node.DECLARE_STMT:
+                cls.translate_declare(node)
+            elif node_type == Node.ASSIGN_STMT:
+                cls.translate_assign(node)
+            cls.symbol_table.clear_temp_name()
+            if node.get_next() is not None:
+                node = node.get_next()
+                continue
+            break
 
     @classmethod
     def translate_if(cls, node):
@@ -86,10 +93,11 @@ class Generator:
         cls.lineCount += 1
         cls.scope_level += 1
         cls.translate_switch(node.get_middle())
-        cls.symbol_table.pop()
-        cls.lineCount += 1
+        cls.symbol_table.pop(cls.scope_level)
         cls.scope_level -= 1
         cls.codes.append(Quaternion(Quaternion.OUT))
+        cls.lineCount += 1
+        cls.codes.append(Quaternion(Quaternion.GO, None, None, str(go_line)))
         cls.lineCount += 1
         false_go.set_forth(str(cls.lineCount + 1))
 
@@ -231,7 +239,8 @@ class Generator:
                 cls.codes.append(Quaternion(Quaternion.PLUS, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
             elif data_type == Token.MINUS:
                 cls.codes.append(Quaternion(Quaternion.MINUS, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-            raise
+                return
+            raise ErrorInterpret("算数运算错误")
         except ErrorInterpret as e:
             print(e.content)
 

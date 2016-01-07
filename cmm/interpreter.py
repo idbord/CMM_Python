@@ -6,3 +6,5 @@ class Interpreter:
 
     def __init__(self):
         pass
+
+    scope_level = 0

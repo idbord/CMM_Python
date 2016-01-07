@@ -7,28 +7,20 @@ from exception.interpretException import ErrorInterpret
 
 class SymbolTable:
 
-    def __init__(self):
-        pass
+    def __new__(cls):
+        if 'symbolTable' not in cls.__dict__:
+            cls.symbolTable = object.__new__(cls)
+        return cls.symbolTable
 
     TEMP_PREFIX = "*temp"
 
-    symbolTable = __init__()
     tempNames = []
     symbolList = []
-
 
     @classmethod
     def new_table(cls):
         cls.tempNames = []
         cls.symbolList = []
-
-    '''
-    返回符号表对象
-    单例，可能不完善
-    '''
-    @classmethod
-    def get_symbol_table(cls):
-        return cls.symbolTable
 
     '''
     清空符号表
@@ -65,9 +57,9 @@ class SymbolTable:
         for i in cls.symbolList:
             if i.get_level() == level:
                 cls.symbolList[cls.symbolList.index(i)] = i.get_next()
-        for i in cls.symbolList:
-            if i.get_next() is None:
-                cls.symbolList.pop(cls.symbolList.index(i))
+        # for i in cls.symbolList:
+        #     if i.get_next() is None:
+        #         cls.symbolList.pop(cls.symbolList.index(i))
 
     '''
     返回符号对象
@@ -143,7 +135,7 @@ class SymbolTable:
     '''
     @classmethod
     def get_symbol_type(cls, name):
-        return cls.get_symbol(name).get_type()()
+        return cls.get_symbol(name).get_type()
 
     '''
     设置符号值

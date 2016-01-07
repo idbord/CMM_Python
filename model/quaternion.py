@@ -51,3 +51,6 @@ class Quaternion:
 
     def set_forth(self, forth):
         self._forth = forth
+
+    def to_string(self):
+        return "({0}, {1}, {2}, {3})".format(self._first, self._second, self._third, self._forth)

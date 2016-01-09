@@ -1,6 +1,7 @@
 # CMM_Python
 A interpreter for CMM  that written  in Python 
 
+```py
 /*
 这是CMM解释器，开发环境Deepin2015
 用Python语言编写
@@ -13,7 +14,6 @@ GUI采用PyQt5.5
 //后期有时间会继续完善。
 
 
-```
 int a=0;
 while(a<10){
     write a;

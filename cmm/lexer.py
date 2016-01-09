@@ -176,7 +176,6 @@ class Lexer:
                         continue
                     token_list.append(Token(Token.LITERAL_INT, Lexer.lineNum, string.atoi(int_temp)))
                     continue
-
             return token_list
 
         except Exception as e:

@@ -24,7 +24,9 @@ class Generator:
         for i in node_list:
             cls.translate_switch(i)
         cls.symbol_table.delete_table()
-        return cls.codes
+        temp = cls.codes
+        cls.codes = []
+        return temp
 
     @classmethod
     def translate_switch(cls, node):
@@ -88,6 +90,7 @@ class Generator:
     def translate_while(cls, node):
         go_line = cls.lineCount + 1
         false_go = Quaternion(Quaternion.GO, cls.translate_exp(node.get_left()))
+        cls.codes.append(false_go)
         cls.lineCount += 1
         cls.codes.append(Quaternion(Quaternion.IN))
         cls.lineCount += 1
@@ -97,9 +100,9 @@ class Generator:
         cls.scope_level -= 1
         cls.codes.append(Quaternion(Quaternion.OUT))
         cls.lineCount += 1
-        cls.codes.append(Quaternion(Quaternion.GO, None, None, str(go_line)))
+        cls.codes.append(Quaternion(Quaternion.GO, None, None, go_line))
         cls.lineCount += 1
-        false_go.set_forth(str(cls.lineCount + 1))
+        false_go.set_forth(cls.lineCount + 1)
 
     @classmethod
     def translate_read(cls, node):
@@ -165,6 +168,7 @@ class Generator:
         else:
             index = cls.translate_exp(var.get_left())
             cls.codes.append(Quaternion(Quaternion.ASSIGN, value, None, var.get_value() + "[" + index + "]"))
+            cls.lineCount += 1
 
     @classmethod
     def translate_exp(cls, sub_node):
@@ -210,23 +214,20 @@ class Generator:
             data_type = node.get_middle().get_data_type()
             if data_type == Token.GT:
                 cls.codes.append(Quaternion(Quaternion.GT, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
             elif data_type == Token.GET:
                 cls.codes.append(Quaternion(Quaternion.GET, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
             elif data_type == Token.LT:
                 cls.codes.append(Quaternion(Quaternion.LT, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
             elif data_type == Token.LET:
                 cls.codes.append(Quaternion(Quaternion.LET, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
             elif data_type == Token.EQ:
                 cls.codes.append(Quaternion(Quaternion.EQ, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
             elif data_type == Token.NEQ:
                 cls.codes.append(Quaternion(Quaternion.NEQ, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
-            raise ErrorInterpret("逻辑运算非法")
+            else:
+                raise ErrorInterpret("逻辑运算非法")
+            cls.lineCount += 1
+            return temp
         except ErrorInterpret as e:
             print(e.content)
 
@@ -239,8 +240,10 @@ class Generator:
                 cls.codes.append(Quaternion(Quaternion.PLUS, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
             elif data_type == Token.MINUS:
                 cls.codes.append(Quaternion(Quaternion.MINUS, cls.translate_exp(node.get_left()), cls.translate_exp(node.get_right()), temp))
-                return
-            raise ErrorInterpret("算数运算错误")
+            else:
+                raise ErrorInterpret("算数运算错误")
+            cls.lineCount += 1
+            return temp
         except ErrorInterpret as e:
             print(e.content)
 

@@ -4,16 +4,16 @@ from cmm.lexer import Lexer
 from cmm.parser import Parser
 
 
-def parser():
+def parser(path):
+    result = []
     try:
-        path = "1.cmm"
         stream = open(path, 'r')
         token_list = Lexer.lexer_analysis(stream)
         node_list = Parser.parser_analysis(token_list)
         stream.close()
         for i in node_list:
-            print i.to_string()
+            result.append(i.to_string())
+        return result
     except Exception as e:
         print e
 
-parser()

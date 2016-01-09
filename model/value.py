@@ -123,5 +123,15 @@ class Value:
     def less_equal(self, value_obj):
         return Value.negative(self.greater_equal(value_obj))
 
+    def to_double(self):
+        self.set_value(float(self._v_value))
+        self.set_type(SymbolItem.DOUBLE)
+        return self
+
+    def to_int(self):
+        self.set_value(int(self._v_value))
+        self.set_type(SymbolItem.INT)
+        return self
+
     def to_string(self):
         return str(self._v_value)

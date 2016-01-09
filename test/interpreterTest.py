@@ -3,17 +3,16 @@ __author__ = 'idbord'
 from cmm.lexer import Lexer
 from cmm.parser import Parser
 from cmm.generator import Generator
+from cmm.interpreter import Interpreter
 
 
-def generator(path):
-    result = []
+def interpreter(path):
     try:
         stream = open(path, 'r')
         codes = Generator.generate(Parser.parser_analysis(Lexer.lexer_analysis(stream)))
         stream.close()
-        for i in codes:
-            result.append(i.to_string())
-        return result
+        return Interpreter.interpret(codes)
     except Exception as e:
         print e
 
+# interpreter()

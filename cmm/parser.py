@@ -23,7 +23,9 @@ class Parser:
                 node = cls.switch_stmt()
                 if node:
                     cls.nodeList.append(node)
-            return cls.nodeList
+            temp = cls.nodeList
+            cls.nodeList = []
+            return temp
         except Exception as e:
             print e
 
@@ -186,12 +188,18 @@ class Parser:
             node = Node(Node.EXP)
             node.set_data_type(Token.MULTI_TERM_EXP)
             left_node = cls.parse_term_exp()
-            if cls.get_next_token().get_type() in [Token.PLUS, Token.MINUS]:
+            next_token_type = cls.get_next_token().get_type()
+            if next_token_type == Token.PLUS:
                 node.set_left(left_node)
                 node.set_middle(cls.parse_add_minus_op())
                 node.set_right(cls.parse_multi_term_exp())
-                return node
-            return left_node
+            elif next_token_type == Token.MINUS:
+                node.set_left(left_node)
+                node.set_middle(Node(Node.OP, m_data_type=Token.PLUS))
+                node.set_right(cls.parse_multi_term_exp())
+            else:
+                return left_node
+            return node
         except ErrorParse(cls.get_next_token().get_line_num(), cls.get_next_token().get_type()) as e:
             print e.content
 

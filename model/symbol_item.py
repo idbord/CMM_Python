@@ -14,38 +14,38 @@ class SymbolItem:
 
     # 元素名，元素类型， 元素值， 元素层级， 指向元素下一个同名元素
     def __init__(self, s_name=None, s_type=None, s_value=None, s_level=None, s_next=None):
-        self.name = s_name
-        self.type = s_type
-        self.value = s_value
-        self.level = s_level
-        self.next = s_next
+        self._name = s_name
+        self._type = s_type
+        self._value = s_value
+        self._level = s_level
+        self._next = s_next
 
     def get_name(self):
-        return self.name
+        return self._name
 
     def get_type(self):
-        return self.type
+        return self._type
 
     def get_value(self):
-        return self.value
+        return self._value
 
     def get_level(self):
-        return self.level
+        return self._level
 
     def get_next(self):
-        return self.next
+        return self._next
 
     def set_name(self, s_name):
-        self.name = s_name
+        self._name = s_name
 
     def set_type(self, s_type):
-        self.name = s_type
+        self._type = s_type
 
     def set_value(self, s_value):
-        self.name = s_value
+        self._value = s_value
 
     def set_level(self, s_level):
-        self.name = s_level
+        self._level = s_level
 
     def set_next(self, s_next):
-        self.name = s_next
+        self._next = s_next

@@ -4,6 +4,7 @@ from exception.interpretException import ErrorInterpret
 from model.symbol_table import SymbolTable
 from model.token import Token
 from model.node import Node
+from model.value import Value
 from model.symbol_item import SymbolItem
 from model.quaternion import Quaternion
 
@@ -138,7 +139,7 @@ class Generator:
                 cls.lineCount += 1
                 symbol = SymbolItem(s_name=var.get_value(), s_type=SymbolItem.INT, s_level=cls.scope_level)
                 cls.symbol_table.insert(symbol)
-            elif var.get_date_type() == Token.DOUBLE:
+            elif var.get_data_type() == Token.DOUBLE:
                 cls.codes.append(Quaternion(Quaternion.DOUBLE, value, None, var.get_value()))
                 cls.lineCount += 1
                 symbol = SymbolItem(s_name=var.get_value(), s_type=SymbolItem.DOUBLE, s_level=cls.scope_level)

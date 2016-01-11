@@ -65,7 +65,7 @@ class Parser:
             node.set_left(cls.parse_exp())
             cls.read_token(Token.RPARENT)
             node.set_middle(cls.switch_stmt())
-            if cls.get_next_token().get_type() == Token.ELSE:
+            if cls.iterator.has_next() and cls.get_next_token().get_type() == Token.ELSE:
                 cls.read_token(Token.ELSE)
                 node.set_right(cls.switch_stmt())
             return node

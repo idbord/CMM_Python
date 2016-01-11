@@ -145,7 +145,7 @@ class Ui_main(object):
             Ui_main.path = file_path
         else:
             f = open(Ui_main.path, 'w')
-            f.write(content)
+            f.write(content.encode('utf-8'))
             f.close()
 
     def exit(self):

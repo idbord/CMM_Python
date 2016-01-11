@@ -90,7 +90,7 @@ class Lexer:
                             Lexer.read_char()
                         continue
                     elif Lexer.currentStr == '/':
-                        while Lexer.currentStr is not '\n' and Lexer.currentStr != '':
+                        while Lexer.currentStr != '\n':
                             Lexer.read_char()
                         token_list.append(Token(Token.SCOM, Lexer.lineNum))
                         continue
@@ -176,6 +176,9 @@ class Lexer:
                         continue
                     token_list.append(Token(Token.LITERAL_INT, Lexer.lineNum, string.atoi(int_temp)))
                     continue
+            cls.bufferStream = None
+            cls.currentStr = ""
+            cls.lineNum = 1
             return token_list
 
         except Exception as e:

@@ -59,9 +59,13 @@ class Interpreter:
                     cls.set_value(quaternion.get_forth(), value)
             elif instr_type == Quaternion.WRITE:
                 index = -1
-                if cls.is_array(quaternion.get_forth()):
-                    index = cls.get_array_index(quaternion.get_forth())
-                cls.result.append(cls.symbol_table.get_symbol_value(quaternion.get_forth(), index).get_value())
+                forth = quaternion.get_forth()
+                if type(forth) == int:
+                    cls.result.append(forth)
+                else:
+                    if cls.is_array(forth):
+                        index = cls.get_array_index(quaternion.get_forth())
+                    cls.result.append(cls.symbol_table.get_symbol_value(quaternion.get_forth(), index).get_value())
             elif instr_type == Quaternion.IN:
                 cls.scope_level += 1
             elif instr_type == Quaternion.OUT:
@@ -86,7 +90,7 @@ class Interpreter:
                 else:
                     int_value = 0
                     if quaternion.get_second() is not None:
-                        int_value = Value(SymbolItem.INT, int(quaternion.get_second()))
+                        int_value = Value(SymbolItem.INT, quaternion.get_second())
                     symbol = SymbolItem(quaternion.get_forth(), SymbolItem.DOUBLE, int_value, cls.scope_level)
                 cls.symbol_table.insert(symbol)
             elif instr_type == Quaternion.ASSIGN:

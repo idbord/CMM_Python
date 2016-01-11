@@ -55,7 +55,9 @@ class SymbolTable:
     @classmethod
     def pop(cls, level):
         for i in cls.symbolList:
-            if i.get_level() == level:
+            if i is None:
+                cls.symbolList.remove(i)
+            elif i.get_level() == level:
                 cls.symbolList[cls.symbolList.index(i)] = i.get_next()
         # for i in cls.symbolList:
         #     if i.get_next() is None:
@@ -77,6 +79,9 @@ class SymbolTable:
                 k = SymbolItem(s_name=name, s_type=SymbolItem.TEMP, s_value=Value(SymbolItem.TEMP), s_level=-1)
                 cls.tempNames.append(k)
                 return k
+            if type(name) == str:
+                symbol = SymbolItem(s_value=Value(SymbolItem.TEMP, int(name)))
+                return symbol
             raise ErrorInterpret("变量" + name + "未定义")
         except ErrorInterpret as e:
             print e.content

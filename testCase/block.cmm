@@ -1,0 +1,13 @@
+/*
+嵌套
+*/
+
+int a=3;
+while(a>0){
+    write a;
+    a=a-1;
+    if(a==1){
+        int b = 8;
+        write b;
+    }
+}

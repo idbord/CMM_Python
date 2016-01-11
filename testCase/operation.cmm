@@ -1,0 +1,21 @@
+/*
+四则运算
+*/
+
+int a = 0;
+
+a = 1*5;
+
+write a;
+
+a = 2-1;
+
+write a;
+
+a = 2/5;
+
+write a;
+
+a = 5/2;
+
+write a;
